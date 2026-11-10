@@ -1,3 +1,21 @@
+SSH-Honeypot-nx
+==============
+
+Adapted from https://github.com/internetwache/SSH-Honeypot by Sebastian Neef (gehaxelt), internetwache.org.
+
+This is a standalone copy of the original project (last upstream commit 3ee0815, March 2021; the code dates from January 2015) with only the changes needed to run it on Python 3. The original imports the Python 2 `thread` module and does not start on Python 3. Behaviour, defaults and log formats are unchanged.
+
+Changes for Python 3:
+
+* `thread.start_new_thread` replaced by a daemon `threading.Thread`; shebang `python3`.
+* The credential log is opened as UTF-8 (undecodable characters are written as backslash escapes) and console output is flushed at once, so it reaches the systemd journal.
+* Optional environment variables, with the original values as defaults: `SSH_HONEYPOT_PORT` (2222), `SSH_HONEYPOT_LOGFILE` (logins.txt), `SSH_HONEYPOT_KEY` (server.key), `SSH_HONEYPOT_PARAMIKO_LOG` (paramiko.log).
+* `requirements.txt` pins paramiko 5.1.0 (tested on Python 3.11).
+
+Install on Python 3: `python3 -m venv venv && venv/bin/pip install -r requirements.txt`, generate the key as below, then `venv/bin/python honeypot.py`.
+
+The original README follows.
+
 SSH-Honeypot
 ==============
 
